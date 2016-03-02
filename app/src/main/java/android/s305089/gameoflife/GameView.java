@@ -30,7 +30,7 @@ public class GameView extends View {
         for (int i = 1; i < board.getArrayLength(); i++) {
             for (int j = 1; j < board.getArrayLength(i); j++) {
                 if(board.getCellState(i,j)){
-                    canvas.drawRect(i,j,i*100,j*100,paint);
+                    canvas.drawRect(i*100,j*100,i*100+100,j*100+100,paint);
                 }
             }
         }

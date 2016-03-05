@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">GameOfLife</string>
     <string name="action_settings">Settings</string>
+    <string name="main_acitivity_textField_hint">Skriv inn noe i dette tekstfeltet</string>
+    <string name="main_activity_button">Gjør om tekst til QR-kode</string>
 </resources>

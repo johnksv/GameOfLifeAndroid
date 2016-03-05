@@ -5,9 +5,9 @@ package android.s305089.gameoflife;
  */
 public class GameBoard {
     private final int WIDTH, HEIGHT;
-    private byte[][] gameBoard;
     protected double cellSize;
     protected double gridSpacing;
+    private byte[][] gameBoard;
     private ConwaysRule activeRule;
 
     public GameBoard() {
@@ -19,10 +19,11 @@ public class GameBoard {
         this.HEIGHT = height;
         //gameBoard = new byte[WIDTH][HEIGHT];
         gameBoard = new byte[][]{
-                {0, 0, 0, 0},
-                {0, 64, 0, 0},
-                {0, 0, 64, 0},
-                {0, 0, 0, 0}};
+                {0, 0, 0, 0, 0},
+                {0, 0, 64, 0, 0},
+                {0, 0, 64, 0, 0},
+                {0, 0, 64, 0, 0},
+                {0, 0, 0, 0, 0}};
         activeRule = new ConwaysRule();
     }
 
@@ -51,6 +52,12 @@ public class GameBoard {
         return gameBoard;
     }
 
+    protected void setGameBoard(Object gameBoard) {
+        if (gameBoard instanceof byte[][]) {
+            this.gameBoard = (byte[][]) gameBoard;
+        }
+    }
+
     public void setCellState(double x, double y, boolean alive) {
 
         /*
@@ -68,12 +75,6 @@ public class GameBoard {
             gameBoard[(int) y][(int) x] = value;
         } catch (ArrayIndexOutOfBoundsException e) {
             System.err.println("Click was outside array");
-        }
-    }
-
-    protected void setGameBoard(Object gameBoard) {
-        if (gameBoard instanceof byte[][]) {
-            this.gameBoard = (byte[][]) gameBoard;
         }
     }
 

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.PaintDrawable;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -25,7 +24,6 @@ public class GameView extends View {
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
         canvas.drawColor(Color.BLUE);
         for (int i = 1; i < board.getArrayLength(); i++) {
             for (int j = 1; j < board.getArrayLength(i); j++) {
@@ -35,10 +33,7 @@ public class GameView extends View {
             }
         }
 
-    }
-
-    public void onDraw(Canvas canvas, Paint paint){
-
+        board.nextGen();
     }
 
 }

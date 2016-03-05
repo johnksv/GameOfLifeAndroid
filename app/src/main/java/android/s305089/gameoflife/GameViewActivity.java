@@ -52,3 +52,4 @@ public class GameViewActivity extends Activity {
     }
 
 }
+

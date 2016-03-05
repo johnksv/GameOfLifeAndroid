@@ -24,7 +24,7 @@ public class GameView extends View {
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawColor(Color.BLUE);
+        canvas.drawColor(Color.WHITE);
         for (int i = 1; i < board.getArrayLength(); i++) {
             for (int j = 1; j < board.getArrayLength(i); j++) {
                 if(board.getCellState(i,j)){

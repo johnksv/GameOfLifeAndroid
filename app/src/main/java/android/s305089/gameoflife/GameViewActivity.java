@@ -7,12 +7,13 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class GameViewActivity extends Activity {
 
     private GameView gameView;
     private Button btnNextGen, btnStartGame;
-    private ValueAnimator animation = ValueAnimator.ofInt(0, 1).setDuration(1000);
+    private ValueAnimator animation  = ValueAnimator.ofInt(0,1).setDuration(250);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +22,8 @@ public class GameViewActivity extends Activity {
         gameView = (GameView) findViewById(R.id.game);
         btnNextGen = (Button) findViewById(R.id.btnNextGen);
         btnStartGame = (Button) findViewById(R.id.btnStartGame);
-
         initAnimation();
+
     }
 
     private void initAnimation() {
@@ -31,11 +32,13 @@ public class GameViewActivity extends Activity {
             @Override
             public void onAnimationRepeat(Animator animation) {
                 gameView.invalidate();
+                System.out.println(animation.getDuration());
             }
         });
     }
 
     public void handleStartBtn(View v) {
+
         if (animation.isStarted()) {
             animation.pause();
             btnStartGame.setText("Start game");
@@ -45,6 +48,7 @@ public class GameViewActivity extends Activity {
             btnStartGame.setText("Pause game");
             btnNextGen.setClickable(false);
         }
+
     }
 
     public void handleNextGenBtn(View v){

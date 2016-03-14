@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.s305089.gameoflife.R;
+import android.s305089.gameoflife.board.GameBoard;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +14,10 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.google.zxing.qrcode.encoder.Encoder;
 import com.google.zxing.qrcode.encoder.QRCode;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 /**
@@ -45,11 +50,18 @@ public class MainActivity extends Activity implements Serializable {
             e.printStackTrace();
         }
 
-        for(byte[] b :qrCode.getMatrix().getArray() ){
-            for(byte a : b){
-                System.out.print(a);
-            }
-            System.out.println();
+        GameBoard gameBoard = new GameBoard(qrCode.getMatrix().getArray());
+
+        try(FileOutputStream outputStream = new FileOutputStream("gameboard.board")){
+            ObjectOutputStream writeObject = new ObjectOutputStream( outputStream);
+
+            writeObject.writeObject(gameBoard);
+
+            writeObject.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }

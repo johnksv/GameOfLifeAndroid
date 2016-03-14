@@ -1,9 +1,11 @@
 package android.s305089.gameoflife.board;
 
+import java.io.Serializable;
+
 /**
  * Created by s305089 on 02.03.2016.
  */
-public class GameBoard {
+public class GameBoard implements Serializable {
     private final int WIDTH, HEIGHT;
     protected double cellSize;
     protected double gridSpacing;
@@ -17,13 +19,14 @@ public class GameBoard {
     public GameBoard(int width, int height) {
         this.WIDTH = width;
         this.HEIGHT = height;
-        //gameBoard = new byte[WIDTH][HEIGHT];
-        gameBoard = new byte[][]{
-                {0, 0, 0, 0, 0},
-                {0, 0, 64, 0, 0},
-                {0, 0, 64, 0, 0},
-                {0, 0, 64, 0, 0},
-                {0, 0, 0, 0, 0}};
+        gameBoard = new byte[WIDTH][HEIGHT];
+        activeRule = new ConwaysRule();
+    }
+
+    public GameBoard(byte[][] gameboard) {
+        WIDTH = -1;
+        HEIGHT = -1;
+        this.gameBoard = gameboard;
         activeRule = new ConwaysRule();
     }
 
@@ -48,34 +51,11 @@ public class GameBoard {
         return gameBoard[i].length - 1;
     }
 
-    public byte[][] getGameBoard() {
-        return gameBoard;
-    }
 
-    protected void setGameBoard(Object gameBoard) {
-        if (gameBoard instanceof byte[][]) {
-            this.gameBoard = (byte[][]) gameBoard;
-        }
-    }
 
     public void setCellState(double x, double y, boolean alive) {
 
-        /*
-         * y is position of the first index of the matrix (column)
-         * x is position of the second index of the matrix (row)
-         */
-        y = y / (cellSize + gridSpacing);
-        x = x / (cellSize + gridSpacing);
-        byte value = 0;
-        if (alive) {
-            value = 64;
-        }
-
-        try {
-            gameBoard[(int) y][(int) x] = value;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.err.println("Click was outside array");
-        }
+       throw new UnsupportedOperationException("Not implented yet");
     }
 
     public boolean getCellState(int x, int y) {

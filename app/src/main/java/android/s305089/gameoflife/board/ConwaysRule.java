@@ -1,4 +1,4 @@
-package android.s305089.gameoflife;
+package android.s305089.gameoflife.board;
 
 /**
  * Created by s305089 on 02.03.2016.

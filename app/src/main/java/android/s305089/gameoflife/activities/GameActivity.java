@@ -1,15 +1,16 @@
-package android.s305089.gameoflife;
+package android.s305089.gameoflife.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.os.Bundle;
+import android.s305089.gameoflife.R;
+import android.s305089.gameoflife.views.GameView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
-public class GameViewActivity extends Activity {
+public class GameActivity extends Activity {
 
     private GameView gameView;
     private Button btnNextGen, btnStartGame;

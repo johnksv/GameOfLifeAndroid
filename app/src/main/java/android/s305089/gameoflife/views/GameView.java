@@ -1,9 +1,10 @@
-package android.s305089.gameoflife;
+package android.s305089.gameoflife.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.s305089.gameoflife.board.GameBoard;
 import android.util.AttributeSet;
 import android.view.View;
 

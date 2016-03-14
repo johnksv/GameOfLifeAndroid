@@ -7,7 +7,7 @@
     android:columnCount="2">
 
 
-    <android.s305089.gameoflife.GameView
+    <android.s305089.gameoflife.views.GameView
         android:id="@+id/game"
         android:layout_height="match_parent"
         android:layout_width="match_parent"

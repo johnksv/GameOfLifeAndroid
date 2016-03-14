@@ -1,8 +1,9 @@
-package android.s305089.gameoflife;
+package android.s305089.gameoflife.activities;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.s305089.gameoflife.R;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;

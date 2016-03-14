@@ -27,6 +27,9 @@ public class MainActivity extends Activity implements Serializable {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main);
+
         btnToQRCode = (Button) findViewById(R.id.btnToQRCode);
         editTexttoQR = (EditText) findViewById(R.id.editTextToQR);
 
@@ -36,8 +39,17 @@ public class MainActivity extends Activity implements Serializable {
 
         try {
             qrCode = Encoder.encode(editTexttoQR.getText().toString(), ErrorCorrectionLevel.Q);
+
         } catch (WriterException e) {
             e.printStackTrace();
         }
+
+        for(byte[] b :qrCode.getMatrix().getArray() ){
+            for(byte a : b){
+                System.out.print(a);
+            }
+            System.out.println();
+        }
+
     }
 }

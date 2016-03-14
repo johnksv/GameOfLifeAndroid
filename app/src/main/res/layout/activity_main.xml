@@ -6,7 +6,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/editTextToQR"
         android:hint="@string/main_acitivity_textField_hint"/>
 
     <Button

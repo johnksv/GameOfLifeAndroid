@@ -4,8 +4,10 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.s305089.gameoflife.R;
+import android.s305089.gameoflife.board.GameBoard;
 import android.s305089.gameoflife.views.GameView;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +16,8 @@ public class GameActivity extends Activity {
 
     private GameView gameView;
     private Button btnNextGen, btnStartGame;
-    private ValueAnimator animation  = ValueAnimator.ofInt(0,1).setDuration(250);
+    private ValueAnimator animation = ValueAnimator.ofInt(0, 1).setDuration(250);
+    private Intent recivedIntent = getIntent();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,8 @@ public class GameActivity extends Activity {
         btnNextGen = (Button) findViewById(R.id.btnNextGen);
         btnStartGame = (Button) findViewById(R.id.btnStartGame);
         initAnimation();
+        gameView.setGameBoard((GameBoard) recivedIntent.getSerializableExtra("gameboard"));
+
 
     }
 
@@ -52,7 +57,7 @@ public class GameActivity extends Activity {
 
     }
 
-    public void handleNextGenBtn(View v){
+    public void handleNextGenBtn(View v) {
         gameView.invalidate();
     }
 

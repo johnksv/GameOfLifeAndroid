@@ -28,6 +28,7 @@ public class MainActivity extends Activity implements Serializable {
     private Button btnToQRCode;
     private EditText editTexttoQR;
     private QRCode qrCode;
+    private Intent intent;
 
 
     @Override
@@ -63,6 +64,10 @@ public class MainActivity extends Activity implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        intent = new Intent(this, GameActivity.class);
+        intent.putExtra("gameboard", gameBoard);
+        startActivity(intent);
 
     }
 }

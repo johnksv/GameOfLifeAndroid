@@ -1,9 +1,11 @@
 package android.s305089.gameoflife.board;
 
+import java.io.Serializable;
+
 /**
  * Created by s305089 on 02.03.2016.
  */
-public class ConwaysRule {
+public class ConwaysRule implements Serializable {
     private boolean toLive(byte cellToCheck) {
         return cellToCheck == 66 || cellToCheck == 67;
     }

@@ -37,4 +37,8 @@ public class GameView extends View {
         board.nextGen();
     }
 
+    public void setGameBoard(GameBoard board){
+        this.board = board;
+    }
+
 }

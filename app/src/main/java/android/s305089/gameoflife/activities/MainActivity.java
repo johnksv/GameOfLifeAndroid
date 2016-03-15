@@ -1,10 +1,10 @@
 package android.s305089.gameoflife.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.s305089.gameoflife.R;
-import android.s305089.gameoflife.board.GameBoard;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,10 +14,6 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.google.zxing.qrcode.encoder.Encoder;
 import com.google.zxing.qrcode.encoder.QRCode;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 /**
@@ -28,7 +24,6 @@ public class MainActivity extends Activity implements Serializable {
     private Button btnToQRCode;
     private EditText editTexttoQR;
     private QRCode qrCode;
-    private Intent intent;
 
 
     @Override
@@ -43,19 +38,19 @@ public class MainActivity extends Activity implements Serializable {
     }
 
     public void textToQR(View view) {
-        intent = new Intent(this, GameActivity.class);
+        Intent startGameActivity = new Intent(this, GameActivity.class);
 
         try {
             qrCode = Encoder.encode(editTexttoQR.getText().toString(), ErrorCorrectionLevel.Q);
 
         } catch (WriterException e) {
+            System.out.println("There was an error converting the text to QR");
             e.printStackTrace();
         }
 
-
-        intent.putExtra("qrGameBoard", qrCode.getMatrix().getArray());
-        //intent.putExtra("gameboard", new GameBoard(qrCode.getMatrix().getArray()));
-        startActivity(intent);
+        //TODO: REMOVE COMMENT Serilaized Board first, but found out this was easier.
+        startGameActivity.putExtra("qrGameBoard", qrCode.getMatrix().getArray());
+        startActivity(startGameActivity);
 
 
     }

@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by s305089 on 02.03.2016.
  */
-public class GameBoard implements Serializable {
+public class GameBoard  {
     private final int WIDTH, HEIGHT;
     protected double cellSize;
     protected double gridSpacing;

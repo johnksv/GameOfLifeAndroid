@@ -35,10 +35,31 @@ public class GameBoard implements Serializable {
         checkRules(activeRule);
     }
 
-    public void clearBoard() {
-        for (int i = 1; i < getArrayLength(); i++) {
-            for (int j = 1; j < getArrayLength(i); j++) {
-                gameBoard[i][j] = 0;
+    /**
+     * Inserts a byte 2D-array into the current gameboard at the given (y, x)
+     * position.
+     * <p>
+     * For example: To insert boardFromFile to upper left corner of the current
+     * gameboard, insert at position (0,0).
+     * <p>
+     * Elements from boardFromFile that exceeds the dimensios of the
+     * current gameboard is not inserted.
+     *
+     *
+     * @param boardFromFile bytearray to insert into the current gameboard.
+     * @param y coordinate for where the first row is placed
+     * @param x coordinate for where the first column is placed
+     */
+    public void insertArray(byte[][] boardFromFile, int y, int x) {
+        y++;
+        x++;
+        for (int i = 0; i < boardFromFile.length; i++) {
+            for (int j = 0; j < boardFromFile[i].length; j++) {
+                if (i + y < gameBoard.length && j + x < gameBoard[y + i].length) {
+                    if (i + y >= 0 && j + x >= 0) {
+                        gameBoard[i + y][j + x] = boardFromFile[i][j];
+                    }
+                }
             }
         }
     }
@@ -49,13 +70,6 @@ public class GameBoard implements Serializable {
 
     public int getArrayLength(int i) {
         return gameBoard[i].length - 1;
-    }
-
-
-
-    public void setCellState(double x, double y, boolean alive) {
-
-       throw new UnsupportedOperationException("Not implented yet");
     }
 
     public boolean getCellState(int x, int y) {
@@ -83,7 +97,6 @@ public class GameBoard implements Serializable {
                         }
                     }
                 }
-
             }
         }
     }
@@ -112,5 +125,4 @@ public class GameBoard implements Serializable {
         }
         return result;
     }
-
 }

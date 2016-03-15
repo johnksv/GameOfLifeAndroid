@@ -8,22 +8,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.s305089.gameoflife.R;
 import android.s305089.gameoflife.board.BoardUsefullMethods;
-import android.s305089.gameoflife.board.GameBoard;
 import android.s305089.gameoflife.views.GameView;
 import android.view.View;
 import android.widget.Button;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 
 public class GameActivity extends Activity {
 
     private GameView gameView;
     private Button btnNextGen, btnStartGame;
     private ValueAnimator animation = ValueAnimator.ofInt(0, 1).setDuration(250);
-    private Intent recivedIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +27,10 @@ public class GameActivity extends Activity {
         btnStartGame = (Button) findViewById(R.id.btnStartGame);
         initAnimation();
 
-        recivedIntent = getIntent();
+        Intent recivedIntent = getIntent();
         byte[][] newGameBoard = (byte[][]) recivedIntent.getSerializableExtra("qrGameBoard");
         BoardUsefullMethods.setOnesTo64(newGameBoard);
         gameView.setNewGameBoard(newGameBoard);
-
     }
 
 
@@ -48,6 +40,7 @@ public class GameActivity extends Activity {
             @Override
             public void onAnimationRepeat(Animator animation) {
                 gameView.invalidate();
+                gameView.getBoard().nextGen();
                 System.out.println(animation.getDuration());
             }
         });
@@ -64,12 +57,10 @@ public class GameActivity extends Activity {
             btnStartGame.setText("Pause game");
             btnNextGen.setClickable(false);
         }
-
     }
 
     public void handleNextGenBtn(View v) {
         gameView.invalidate();
     }
-
 }
 

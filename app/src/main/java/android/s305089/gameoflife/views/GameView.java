@@ -44,7 +44,6 @@ public class GameView extends View {
         if (getBoard() != null) {
             int a = this.getWidth();
             cellSize = (float) Math.floor(this.getWidth() / (getBoard().getArrayLength() + 2 * spacing));
-            System.out.println(cellSize);
         } else {
             cellSize = 10;
         }

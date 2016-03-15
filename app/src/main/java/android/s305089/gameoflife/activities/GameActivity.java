@@ -48,19 +48,24 @@ public class GameActivity extends Activity {
 
     public void handleStartBtn(View v) {
 
-        if (animation.isStarted()) {
-            animation.pause();
-            btnStartGame.setText("Start game");
-            btnNextGen.setClickable(true);
-        } else {
+        if (!animation.isStarted()) {
             animation.start();
             btnStartGame.setText("Pause game");
-            btnNextGen.setClickable(false);
+            btnNextGen.setEnabled(false);
+        } else if (animation.isPaused()) {
+            animation.resume();
+            btnStartGame.setText("Pause game");
+            btnNextGen.setEnabled(true);
+        } else {
+            animation.pause();
+            btnStartGame.setText("Start game");
+            btnNextGen.setEnabled(true);
         }
     }
 
     public void handleNextGenBtn(View v) {
         gameView.invalidate();
+        gameView.getBoard().nextGen();
     }
 }
 

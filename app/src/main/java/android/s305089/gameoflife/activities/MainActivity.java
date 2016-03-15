@@ -43,6 +43,7 @@ public class MainActivity extends Activity implements Serializable {
     }
 
     public void textToQR(View view) {
+        intent = new Intent(this, GameActivity.class);
 
         try {
             qrCode = Encoder.encode(editTexttoQR.getText().toString(), ErrorCorrectionLevel.Q);
@@ -51,23 +52,11 @@ public class MainActivity extends Activity implements Serializable {
             e.printStackTrace();
         }
 
-        GameBoard gameBoard = new GameBoard(qrCode.getMatrix().getArray());
 
-        try(FileOutputStream outputStream = new FileOutputStream("gameboard.board")){
-            ObjectOutputStream writeObject = new ObjectOutputStream( outputStream);
-
-            writeObject.writeObject(gameBoard);
-
-            writeObject.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        intent = new Intent(this, GameActivity.class);
-        intent.putExtra("gameboard", gameBoard);
+        intent.putExtra("qrGameBoard", qrCode.getMatrix().getArray());
+        //intent.putExtra("gameboard", new GameBoard(qrCode.getMatrix().getArray()));
         startActivity(intent);
+
 
     }
 }

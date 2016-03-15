@@ -109,9 +109,7 @@ public class GameBoard implements Serializable {
                     result += 0;
                 }
             }
-            //result += "\n";
         }
-
         return result;
     }
 

@@ -71,4 +71,5 @@ public class GameView extends View {
     public GameBoard getBoard() {
         return board;
     }
+
 }

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.s305089.gameoflife.R;
 import android.s305089.gameoflife.board.BoardUsefullMethods;
 import android.s305089.gameoflife.views.GameView;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
@@ -31,6 +32,15 @@ public class GameActivity extends Activity {
         byte[][] newGameBoard = (byte[][]) recivedIntent.getSerializableExtra("qrGameBoard");
         BoardUsefullMethods.setOnesTo64(newGameBoard);
         gameView.setNewGameBoard(newGameBoard);
+
+        gameView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                System.out.println(event.getX() + " y: " + event.getY());
+
+                return true;
+            }
+        });
     }
 
 

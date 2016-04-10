@@ -13,15 +13,12 @@ import android.view.View;
  */
 public class GameView extends View {
     private GameBoard board = new GameBoard();
-    private Canvas canvas;
     private Paint paint = new Paint();
     private float cellSize;
     private int spacing = 5;
 
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-        canvas = new Canvas();
         paint.setColor(Color.BLACK);
     }
 
@@ -42,7 +39,6 @@ public class GameView extends View {
 
     private void calculateCellSize() {
         if (getBoard() != null) {
-            int a = this.getWidth();
             cellSize = (float) Math.floor(this.getWidth() / (getBoard().getArrayLength() + 2 * spacing));
         } else {
             cellSize = 10;
@@ -63,8 +59,8 @@ public class GameView extends View {
             }
         }
 
-        GameBoard newBoard = new GameBoard(new byte[boardAsByte.length + 2][longestRowLength + 2]);
-        newBoard.insertArray(boardAsByte, 0, 0);
+        GameBoard newBoard = new GameBoard(new byte[boardAsByte.length+3][longestRowLength + 3]);
+        newBoard.insertArray(boardAsByte, 2, 2);
         this.board = newBoard;
     }
 

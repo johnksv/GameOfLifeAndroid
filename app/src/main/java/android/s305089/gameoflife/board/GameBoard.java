@@ -51,8 +51,6 @@ public class GameBoard  {
      * @param x coordinate for where the first column is placed
      */
     public void insertArray(byte[][] boardFromFile, int y, int x) {
-        y++;
-        x++;
         for (int i = 0; i < boardFromFile.length; i++) {
             for (int j = 0; j < boardFromFile[i].length; j++) {
                 if (i + y < gameBoard.length && j + x < gameBoard[y + i].length) {

@@ -18,6 +18,7 @@ public class GameActivity extends Activity {
     private GameView gameView;
     private Button btnNextGen, btnStartGame;
     private ValueAnimator animation = ValueAnimator.ofInt(0, 1).setDuration(250);
+    private float oldX = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +29,8 @@ public class GameActivity extends Activity {
         btnStartGame = (Button) findViewById(R.id.btnStartGame);
         initAnimation();
 
-        Intent recivedIntent = getIntent();
-        byte[][] newGameBoard = (byte[][]) recivedIntent.getSerializableExtra("qrGameBoard");
+        Intent receivedIntent = getIntent();
+        byte[][] newGameBoard = (byte[][]) receivedIntent.getSerializableExtra("qrGameBoard");
         BoardUsefullMethods.setOnesTo64(newGameBoard);
         gameView.setNewGameBoard(newGameBoard);
 
@@ -37,7 +38,8 @@ public class GameActivity extends Activity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 System.out.println(event.getX() + " y: " + event.getY());
-
+                //gameView.setTranslationX(event.getX()-oldX);
+                oldX = event.getX();
                 return true;
             }
         });
@@ -51,7 +53,6 @@ public class GameActivity extends Activity {
             public void onAnimationRepeat(Animator animation) {
                 gameView.invalidate();
                 gameView.getBoard().nextGen();
-                System.out.println(animation.getDuration());
             }
         });
     }

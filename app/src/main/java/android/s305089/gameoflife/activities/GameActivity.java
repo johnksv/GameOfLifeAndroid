@@ -33,16 +33,6 @@ public class GameActivity extends Activity {
         byte[][] newGameBoard = (byte[][]) receivedIntent.getSerializableExtra("qrGameBoard");
         BoardUsefullMethods.setOnesTo64(newGameBoard);
         gameView.setNewGameBoard(newGameBoard);
-
-        gameView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                System.out.println(event.getX() + " y: " + event.getY());
-                //gameView.setTranslationX(event.getX()-oldX);
-                oldX = event.getX();
-                return true;
-            }
-        });
     }
 
 

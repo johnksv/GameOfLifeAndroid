@@ -17,13 +17,12 @@ public class GameView extends View {
     private GameBoard board = new GameBoard();
     private Paint paint = new Paint();
     private GameViewGestures gameViewGestures = new GameViewGestures();
+    private GestureDetector gestureDetector;
 
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-        System.out.println("CONSTRUCTOR");
+        gestureDetector = new GestureDetector(context, new GameViewGestures());
         paint.setColor(Color.BLACK);
-
     }
 
     @Override
@@ -57,14 +56,12 @@ public class GameView extends View {
                 longestRowLength = b.length;
             }
         }
-        System.out.println("width" + this.getWidth());
         board.insertArray(boardAsByte, 1, 1);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        int action = event.getActionMasked();
-        gameViewGestures.onSingleTapUp(event);
+        gestureDetector.onTouchEvent(event);
 
         return super.onTouchEvent(event);
     }
@@ -75,15 +72,16 @@ public class GameView extends View {
 
     private class GameViewGestures extends GestureDetector.SimpleOnGestureListener {
         @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            System.out.println("Flinging!");
+            return super.onFling(e1, e2, velocityX, velocityY);
+        }
+
+        @Override
         public boolean onSingleTapUp(MotionEvent event) {
-            System.out.println(event.getX() + " y: " + event.getY());
             double x = event.getX();
             double y = event.getY();
-            if (board.getCellState(y, x, 0, 0)) {
-                board.setCellState(y, x, false, 0, 0);
-            } else {
-                board.setCellState(y, x, true, 0, 0);
-            }
+            board.setCellState(y, x, !board.getCellState(y, x, 0, 0), 0, 0);
             invalidate();
             return super.onSingleTapUp(event);
         }

@@ -8,25 +8,53 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.s305089.gameoflife.R;
 import android.s305089.gameoflife.board.BoardUsefullMethods;
+import android.s305089.gameoflife.board.GameBoard;
 import android.s305089.gameoflife.views.GameView;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+import android.widget.ZoomControls;
 
 public class GameActivity extends Activity {
 
     private GameView gameView;
+    private GameBoard gameBoard;
     private Button btnNextGen, btnStartGame;
     private ValueAnimator animation = ValueAnimator.ofInt(0, 1).setDuration(250);
     private float oldX = 0;
+    private ZoomControls zoomControls;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_viewer);
+        setContentView(R.layout.activity_game);
         gameView = (GameView) findViewById(R.id.game);
         btnNextGen = (Button) findViewById(R.id.btnNextGen);
         btnStartGame = (Button) findViewById(R.id.btnStartGame);
+        zoomControls = (ZoomControls) findViewById(R.id.zoomControls);
+
+        gameBoard = gameView.getBoard();
+
+        //TODO Set onZoomListners for view.
+        zoomControls.setOnZoomInClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameBoard.setCellSize(gameBoard.getCellSize() + 5);
+                gameView.invalidate();
+            }
+        });
+        zoomControls.setOnZoomOutClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(gameBoard.getCellSize() > 0 ) {
+                    gameBoard.setCellSize(gameBoard.getCellSize() - 5);
+                }else{
+                    Toast.makeText(GameActivity.this, "Can not zoom longer out", Toast.LENGTH_SHORT).show();
+                }
+                gameView.invalidate();
+            }
+        });
+
         initAnimation();
 
         Intent receivedIntent = getIntent();
@@ -42,7 +70,7 @@ public class GameActivity extends Activity {
             @Override
             public void onAnimationRepeat(Animator animation) {
                 gameView.invalidate();
-                gameView.getBoard().nextGen();
+                gameBoard.nextGen();
             }
         });
     }
@@ -66,7 +94,7 @@ public class GameActivity extends Activity {
 
     public void handleNextGenBtn(View v) {
         gameView.invalidate();
-        gameView.getBoard().nextGen();
+        gameBoard.nextGen();
     }
 }
 

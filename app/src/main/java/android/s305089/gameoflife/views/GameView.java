@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.s305089.gameoflife.board.GameBoard;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -13,39 +15,28 @@ import android.view.View;
  */
 public class GameView extends View {
     private GameBoard board = new GameBoard();
-    private Canvas canvas;
     private Paint paint = new Paint();
-    private float cellSize;
-    private int spacing = 5;
 
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-        canvas = new Canvas();
         paint.setColor(Color.BLACK);
     }
 
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        calculateCellSize();
-
+        if (board == null) {
+            board = new GameBoard(new byte[this.getHeight() / 10][this.getWidth() / 10]);
+            board.setCellSize(20);
+        }
+        float cellSize = (float) board.getCellSize();
         canvas.drawColor(Color.WHITE);
-        for (int i = 1; i <= getBoard().getArrayLength(); i++) {
-            for (int j = 1; j <= getBoard().getArrayLength(i); j++) {
-                if (getBoard().getCellState(i, j)) {
-                    canvas.drawRect(j * cellSize, i * cellSize, j * cellSize + cellSize + spacing, i * cellSize + cellSize + spacing, paint);
+        for (int i = 1; i <= board.getArrayLength(); i++) {
+            for (int j = 1; j <= board.getArrayLength(i); j++) {
+                if (board.getCellState(i, j)) {
+                    canvas.drawRect(j * cellSize, i * cellSize, j * cellSize + cellSize, i * cellSize + cellSize, paint);
                 }
             }
-        }
-    }
-
-    private void calculateCellSize() {
-        if (getBoard() != null) {
-            int a = this.getWidth();
-            cellSize = (float) Math.floor(this.getWidth() / (getBoard().getArrayLength() + 2 * spacing));
-        } else {
-            cellSize = 10;
         }
     }
 
@@ -62,13 +53,13 @@ public class GameView extends View {
                 longestRowLength = b.length;
             }
         }
-
-        GameBoard newBoard = new GameBoard(new byte[boardAsByte.length + 2][longestRowLength + 2]);
-        newBoard.insertArray(boardAsByte, 0, 0);
-        this.board = newBoard;
+        board.insertArray(boardAsByte, 1, 1);
     }
 
     public GameBoard getBoard() {
         return board;
     }
+
 }
+
+

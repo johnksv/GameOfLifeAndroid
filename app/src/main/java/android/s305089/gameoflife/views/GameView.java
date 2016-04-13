@@ -16,12 +16,9 @@ import android.view.View;
 public class GameView extends View {
     private GameBoard board = new GameBoard();
     private Paint paint = new Paint();
-    private GameViewGestures gameViewGestures = new GameViewGestures();
-    private GestureDetector gestureDetector;
 
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        gestureDetector = new GestureDetector(context, new GameViewGestures());
         paint.setColor(Color.BLACK);
     }
 
@@ -59,33 +56,10 @@ public class GameView extends View {
         board.insertArray(boardAsByte, 1, 1);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        gestureDetector.onTouchEvent(event);
-
-        return super.onTouchEvent(event);
-    }
-
     public GameBoard getBoard() {
         return board;
     }
 
-    private class GameViewGestures extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            System.out.println("Flinging!");
-            return super.onFling(e1, e2, velocityX, velocityY);
-        }
-
-        @Override
-        public boolean onSingleTapUp(MotionEvent event) {
-            double x = event.getX();
-            double y = event.getY();
-            board.setCellState(y, x, !board.getCellState(y, x, 0, 0), 0, 0);
-            invalidate();
-            return super.onSingleTapUp(event);
-        }
-    }
 }
 
 

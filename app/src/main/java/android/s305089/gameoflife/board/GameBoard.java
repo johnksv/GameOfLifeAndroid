@@ -145,7 +145,7 @@ public class GameBoard {
         return gameBoard[i].length - 1;
     }
 
-    public void setCellState(int y, int x, boolean alive) {
+    public boolean setCellState(int y, int x, boolean alive) {
         byte value = 0;
         if (alive) {
             value = 64;
@@ -153,26 +153,25 @@ public class GameBoard {
         if (y < gameBoard.length && y >= 0) {
             if (x < gameBoard[y].length && x >= 0) {
                 gameBoard[y][x] = value;
+                return true;
             } else {
-                System.err.println("x or y was not in gameboard.");
+                return false;
             }
 
         } else {
-            System.err.println("x or y was not in gameboard.");
+            return false;
         }
     }
 
-    public void setCellState(double y, double x, boolean alive, double offsetX, double offsetY) {
+    public boolean setCellState(double y, double x, boolean alive) {
         /*
          * y is position of the first index of the matrix (column)
          * x is position of the second index of the matrix (row)
          */
         y = y / cellSize;
         x = x / cellSize;
-        offsetY = offsetY / cellSize;
-        offsetX = offsetX / cellSize;
 
-        setCellState((int) Math.floor(y - offsetY), (int) Math.floor(x - offsetX), alive);
+        return setCellState((int) Math.floor(y), (int) Math.floor(x), alive);
     }
 
     public boolean getCellState(int y, int x) {

@@ -40,6 +40,16 @@ public class GameActivity extends Activity {
         gestureDetector = new GestureDetector(this, new GameViewGestures());
         gameBoard = gameView.getBoard();
 
+        initListners();
+        initAnimation();
+
+        Intent receivedIntent = getIntent();
+        byte[][] newGameBoard = (byte[][]) receivedIntent.getSerializableExtra("qrGameBoard");
+        BoardUsefullMethods.setOnesTo64(newGameBoard);
+        gameView.setNewGameBoard(newGameBoard);
+    }
+
+    private void initListners() {
         gameView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -50,7 +60,6 @@ public class GameActivity extends Activity {
             }
         });
 
-        //TODO Set onZoomListners for view.
         zoomControls.setOnZoomInClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,21 +70,14 @@ public class GameActivity extends Activity {
         zoomControls.setOnZoomOutClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (gameBoard.getCellSize() > 0) {
+                if (gameBoard.getCellSize() > 5) {
                     gameBoard.setCellSize(gameBoard.getCellSize() - 5);
                 } else {
-                    Toast.makeText(GameActivity.this, "Can not zoom longer out", Toast.LENGTH_SHORT).show();
+                   showToast("Kan ikke zoome lengre ut.");
                 }
                 gameView.invalidate();
             }
         });
-
-        initAnimation();
-
-        Intent receivedIntent = getIntent();
-        byte[][] newGameBoard = (byte[][]) receivedIntent.getSerializableExtra("qrGameBoard");
-        BoardUsefullMethods.setOnesTo64(newGameBoard);
-        gameView.setNewGameBoard(newGameBoard);
     }
 
 
@@ -112,11 +114,12 @@ public class GameActivity extends Activity {
         gameBoard.nextGen();
     }
 
-    class GameViewGestures extends GestureDetector.SimpleOnGestureListener {
+    private class GameViewGestures extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            gameBoard.setCellState(e1.getY(), e1.getX(), true, 0, 0);
-            gameBoard.setCellState(e2.getY(), e2.getX(), true, 0, 0);
+            if(!gameBoard.setCellState(e1.getY(), e1.getX(), true) || !gameBoard.setCellState(e2.getY(), e2.getX(), true)){
+                showToast("Du klikket utenfor spillbrettet..");
+            }
             gameView.invalidate();
             return true;
         }
@@ -125,10 +128,16 @@ public class GameActivity extends Activity {
         public boolean onDown(MotionEvent event) {
             double x = event.getX();
             double y = event.getY();
-            gameBoard.setCellState(y, x, !gameBoard.getCellState(y, x, 0, 0), 0, 0);
+            if(!gameBoard.setCellState(y, x, !gameBoard.getCellState(y, x, 0, 0))){
+                showToast("Du klikket utenfor spillbrettet..");
+            }
             gameView.invalidate();
             return true;
         }
     }
+    private void showToast(String message){
+        Toast.makeText(GameActivity.this, message, Toast.LENGTH_SHORT).show();
+    }
+
 }
 

@@ -16,6 +16,7 @@ import android.view.View;
 public class GameView extends View {
     private GameBoard board = new GameBoard();
     private Paint paint = new Paint();
+    private boolean firstRun = true;
 
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -25,8 +26,12 @@ public class GameView extends View {
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        if (firstRun) {
+            calculateCellSize();
+            firstRun = false;
+        }
         if (board == null) {
-            board = new GameBoard(new byte[this.getHeight() / 10][this.getWidth() / 10]);
+            board = new GameBoard(new byte[this.getHeight() / 20][this.getWidth() / 20]);
             board.setCellSize(20);
         }
         float cellSize = (float) board.getCellSize();
@@ -37,6 +42,15 @@ public class GameView extends View {
                     canvas.drawRect(j * cellSize, i * cellSize, j * cellSize + cellSize, i * cellSize + cellSize, paint);
                 }
             }
+        }
+    }
+
+    private void calculateCellSize() {
+        byte[][] boundedBoard = board.getBoundingBoxBoard();
+        if (getBoard() != null) {
+            board.setCellSize(Math.floor(this.getWidth() / (boundedBoard.length + 2)));
+        } else {
+            board.setCellSize(10);
         }
     }
 

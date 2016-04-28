@@ -4,36 +4,36 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.s305089.gameoflife.board.GameBoard;
+import android.s305089.gameoflife.board.Board;
 import android.util.AttributeSet;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 
 /**
  * Created by s305089 on 02.03.2016.
  */
 public class GameView extends View {
-    private GameBoard board = new GameBoard();
+    public Board board;
     private Paint paint = new Paint();
     private boolean firstRun = true;
 
+
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        board = new Board(160, 160);
+        board.setCellSize(20);
         paint.setColor(Color.BLACK);
     }
+
 
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (firstRun) {
+            //If not called, this.getWidht will retun zero.
             calculateCellSize();
             firstRun = false;
         }
-        if (board == null) {
-            board = new GameBoard(new byte[this.getHeight() / 20][this.getWidth() / 20]);
-            board.setCellSize(20);
-        }
+
         float cellSize = (float) board.getCellSize();
         canvas.drawColor(Color.WHITE);
         for (int i = 1; i <= board.getArrayLength(); i++) {
@@ -45,35 +45,15 @@ public class GameView extends View {
         }
     }
 
+
     private void calculateCellSize() {
         byte[][] boundedBoard = board.getBoundingBoxBoard();
-        if (getBoard() != null) {
+        if (board != null) {
             board.setCellSize(Math.floor(this.getWidth() / (boundedBoard.length + 2)));
         } else {
             board.setCellSize(10);
         }
     }
-
-    /**
-     * Constructs an new GameBoard with the given parameter.
-     * Also creates an container box around the array, for drawing purposes.
-     *
-     * @param boardAsByte THe new gameboard. May contain values or not (64 for alive) (1 for dead)
-     */
-    public void setNewGameBoard(byte[][] boardAsByte) {
-        int longestRowLength = 0;
-        for (byte[] b : boardAsByte) {
-            if (b.length > longestRowLength) {
-                longestRowLength = b.length;
-            }
-        }
-        board.insertArray(boardAsByte, 1, 1);
-    }
-
-    public GameBoard getBoard() {
-        return board;
-    }
-
 }
 
 

@@ -1,33 +1,28 @@
 package android.s305089.gameoflife.board;
 
-import java.io.Serializable;
-
 /**
+ * ArrayBoard copyed from main project.
+ * This class has been tested in the original java project.
+ * <p/>
  * Created by s305089 on 02.03.2016.
  */
-public class GameBoard {
+public class Board {
     private final int WIDTH, HEIGHT;
     private double cellSize = 10;
     private byte[][] gameBoard;
     private ConwaysRule activeRule;
 
-    public GameBoard() {
+    public Board() {
         this(100, 100);
     }
 
-    public GameBoard(int width, int height) {
+    public Board(int width, int height) {
         this.WIDTH = width;
         this.HEIGHT = height;
         gameBoard = new byte[WIDTH][HEIGHT];
         activeRule = new ConwaysRule();
     }
 
-    public GameBoard(byte[][] gameboard) {
-        WIDTH = -1;
-        HEIGHT = -1;
-        this.gameBoard = gameboard;
-        activeRule = new ConwaysRule();
-    }
 
     public void nextGen() {
         countNeigh();

@@ -7,7 +7,7 @@ public final class BoardUsefullMethods {
 
     /**
      * Sets all the ones in the byte to 64.
-     * NB: This method manipulates the string directly
+     * NB: This method manipulates the array directly
      *
      * @param boardToConvert
      * @return

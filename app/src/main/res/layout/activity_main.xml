@@ -20,19 +20,4 @@
         android:onClick="textToQR"
         android:layout_gravity="center_horizontal" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Eller:"
-        android:id="@+id/textView"
-        android:layout_gravity="center_horizontal" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hent QR fra kamera"
-        android:onClick="QRFromCam"
-
-        android:layout_gravity="center_horizontal" />
 </LinearLayout>

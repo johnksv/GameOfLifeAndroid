@@ -48,7 +48,6 @@ public class MainActivity extends Activity implements Serializable {
             e.printStackTrace();
         }
 
-        //TODO: REMOVE COMMENT Serilaized Board first, but found out this was easier.
         startGameActivity.putExtra("qrGameBoard", qrCode.getMatrix().getArray());
         startActivity(startGameActivity);
 
